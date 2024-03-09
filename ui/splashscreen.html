@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="de">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Chroma Shade</title>
+	</head>
+	<body>
+
+        <style>
+            * {
+                margin: 0px;
+                padding: 0px;
+            }
+
+            body {
+                background-color: #2a2b2e;
+                user-select: none;
+                font-family: Arial, Helvetica, sans-serif;
+            }
+
+            .container {
+                width: 100vw;
+                height: 100vh;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .container img {
+                width: 128px;
+                height: 128px;
+            }
+
+            #titlebar-close {
+                display: inline-flex;
+                justify-content: center;
+                align-items: center;
+                position: absolute;
+                right: 0;
+                top: 0;
+                width: 40px;
+                height: 30px;
+                cursor: pointer;
+                transition: background-color 175ms;
+            }
+
+            #titlebar-close:hover {
+                background-color: #ee3e3e;
+            }
+
+            #version {
+                position: absolute;
+                color: #5a5a5a;
+                bottom: 125px;
+                left: 0px;
+                width: 100%;
+                text-align: center;
+            }
+
+        </style>
+
+        <div class="titlebar-button" id="titlebar-close">
+            <svg stroke="#f5f5f5" fill="#f5f5f5" stroke-width="0" viewBox="0 0 16 16" height="16px" width="16px" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M7.116 8l-4.558 4.558.884.884L8 8.884l4.558 4.558.884-.884L8.884 8l4.558-4.558-.884-.884L8 7.116 3.442 2.558l-.884.884L7.116 8z"></path></svg>
+        </div>
+
+        <div class="container">
+            <img src="res/icons/512x512-gray.png">
+        </div>
+
+        <div id="version">v0.0.0</div>
+
+        <script type="module">
+            import { invoke } from './js/node_modules/@tauri-apps/api/tauri.js';
+            import { exit } from './js/node_modules/@tauri-apps/api/process.js';
+            import { getVersion } from './js/node_modules/@tauri-apps/api/app.js';
+
+            document.getElementById('titlebar-close').addEventListener('click', async () => await exit(1));
+
+            document.getElementById('version').innerHTML = "v" + await getVersion();
+
+            await new Promise(r => setTimeout(r, 800)); //wait 800ms
+            invoke('close_splashscreen');
+        </script>
+
+    </body>
+</html>
