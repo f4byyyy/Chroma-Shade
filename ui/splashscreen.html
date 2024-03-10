@@ -79,6 +79,12 @@
 
             document.getElementById('version').innerHTML = "v" + await getVersion();
 
+            //disable context menu (right click menu):
+            document.addEventListener('contextmenu', e => {
+                e.preventDefault();
+                return false;
+            }, { capture: true });
+
             await new Promise(r => setTimeout(r, 800)); //wait 800ms
             invoke('close_splashscreen');
         </script>

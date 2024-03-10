@@ -51,3 +51,9 @@ function checkInput(value) {
 
 setInputFilter(document.getElementById("width-input"), checkInput);
 setInputFilter(document.getElementById("height-input"), checkInput);
+
+//disable context menu (right click menu):
+document.addEventListener('contextmenu', e => {
+    e.preventDefault();
+    return false;
+}, { capture: true });
